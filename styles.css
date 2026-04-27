@@ -168,6 +168,56 @@ body::after {
   text-align: center;
 }
 
+.floating-notes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.floating-note {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.56), transparent 42%),
+    linear-gradient(135deg, rgba(255, 239, 244, 0.98), rgba(255, 250, 252, 0.96));
+  border: 1px solid rgba(222, 92, 145, 0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    0 16px 28px rgba(222, 92, 145, 0.14);
+  color: #cc5d8d;
+  font-size: 0.9rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  backdrop-filter: blur(12px);
+}
+
+.floating-note::before {
+  content: "\2764\FE0F";
+  margin-right: 8px;
+  font-size: 0.9rem;
+}
+
+.note-left {
+  top: 24px;
+  left: 24px;
+  transform: rotate(-8deg);
+  animation: stickerFloatLeft 5.5s ease-in-out infinite;
+}
+
+.note-right {
+  top: 56px;
+  right: 26px;
+  transform: rotate(8deg);
+  animation: stickerFloatRight 6.2s ease-in-out infinite;
+}
+
 .hero-card::before {
   content: "";
   position: absolute;
@@ -545,9 +595,32 @@ body::after {
   }
 }
 
+@keyframes stickerFloatLeft {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-8deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotate(-5deg);
+  }
+}
+
+@keyframes stickerFloatRight {
+  0%,
+  100% {
+    transform: translateY(0) rotate(8deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(4deg);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .floating-hearts span,
   .falling-petal,
+  .floating-note,
   .reveal {
     animation: none;
     transition: none;
@@ -589,6 +662,10 @@ body::after {
     padding-top: 18px;
   }
 
+  .hero-card {
+    padding-top: 118px;
+  }
+
   .hero-card h1 {
     max-width: none;
     font-size: clamp(2.5rem, 11vw, 3.9rem);
@@ -606,6 +683,22 @@ body::after {
     font-size: 0.82rem;
     letter-spacing: 0.12em;
     padding: 10px 16px;
+  }
+
+  .floating-note {
+    min-height: 42px;
+    font-size: 0.76rem;
+    padding: 8px 14px;
+  }
+
+  .note-left {
+    top: 18px;
+    left: 12px;
+  }
+
+  .note-right {
+    top: 60px;
+    right: 12px;
   }
 
   .hero-pill {
