@@ -4,11 +4,11 @@
   --bg-bottom: #f8b9d4;
   --card: rgba(255, 249, 244, 0.68);
   --card-strong: rgba(255, 245, 240, 0.9);
-  --ink: #5f1736;
-  --ink-soft: #874161;
-  --rose: #ef6e9e;
-  --rose-deep: #c93f73;
-  --rose-bright: #ff8bb4;
+  --ink: #8e3f69;
+  --ink-soft: #aa6388;
+  --rose: #f38bb3;
+  --rose-deep: #de5c91;
+  --rose-bright: #ffadc8;
   --gold: #f4c56d;
   --line: rgba(147, 41, 87, 0.16);
   --shadow: 0 30px 70px rgba(149, 54, 95, 0.18);
@@ -222,7 +222,7 @@ body::after {
   z-index: 1;
   text-wrap: balance;
   color: transparent;
-  background: linear-gradient(180deg, #b02260 0%, #611733 78%);
+  background: linear-gradient(180deg, #ff82b0 0%, #cf4e84 78%);
   -webkit-background-clip: text;
   background-clip: text;
   text-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
@@ -234,6 +234,28 @@ body::after {
   color: var(--ink-soft);
   font-size: 1.08rem;
   line-height: 1.95;
+  position: relative;
+  z-index: 1;
+}
+
+.love-note {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 22px auto 0;
+  padding: 12px 22px;
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.5), transparent 44%),
+    linear-gradient(135deg, rgba(255, 234, 239, 0.98), rgba(255, 247, 250, 0.96));
+  border: 1px solid rgba(222, 92, 145, 0.16);
+  box-shadow: 0 14px 28px rgba(222, 92, 145, 0.16);
+  color: var(--rose-deep);
+  font-size: 0.95rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
   position: relative;
   z-index: 1;
 }
@@ -262,7 +284,7 @@ body::after {
   justify-content: center;
   gap: 10px;
   font-weight: 800;
-  color: var(--ink);
+  color: #9b4d77;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
 }
 
@@ -301,7 +323,7 @@ body::after {
 .letter-card h2 {
   margin-top: 14px;
   font-size: clamp(2.3rem, 4vw, 3.9rem);
-  color: #742243;
+  color: #c15484;
 }
 
 .letter-body {
@@ -339,7 +361,7 @@ body::after {
 .comfort-card h3 {
   margin-top: 14px;
   font-size: clamp(2rem, 3vw, 3rem);
-  color: #7b2346;
+  color: #bf527f;
 }
 
 .comfort-list {
@@ -383,7 +405,7 @@ body::after {
   margin: 16px 0 0;
   font-weight: 700;
   line-height: 1.6;
-  color: var(--rose-deep);
+  color: #d25f92;
 }
 
 .gallery-card {
@@ -410,7 +432,7 @@ body::after {
 .gallery-heading h2 {
   margin-top: 12px;
   font-size: clamp(2.4rem, 4vw, 4rem);
-  color: #742243;
+  color: #c15484;
 }
 
 .gallery-heading p {
@@ -456,7 +478,7 @@ body::after {
 
 .gallery-tile figcaption {
   padding: 18px 16px 20px;
-  color: var(--ink);
+  color: #a3557d;
   font-weight: 700;
   text-align: center;
   background: linear-gradient(180deg, rgba(255, 244, 248, 0.6), rgba(255, 252, 250, 0.95));
@@ -578,6 +600,12 @@ body::after {
   .gallery-heading p,
   .closing-card p {
     font-size: 0.98rem;
+  }
+
+  .love-note {
+    font-size: 0.82rem;
+    letter-spacing: 0.12em;
+    padding: 10px 16px;
   }
 
   .hero-pill {
