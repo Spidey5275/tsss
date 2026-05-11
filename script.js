@@ -1,45 +1,7 @@
 const revealItems = document.querySelectorAll(".reveal");
-const comfortButton = document.querySelector("#comfort-button");
-const buttonMessage = document.querySelector("#button-message");
-const petalRain = document.querySelector("#petal-rain");
-
-const comfortMessages = [
-  "I am right here, cheering for your smile to come back softly. \u{1F337}",
-  "Low days do not change how wonderful you are, not even a little. \u{1F497}",
-  "You deserve rest, sweetness, and all the care your heart is asking for. \u2601\uFE0F",
-  "Even today, you are still my favorite kind of beautiful soul. \u2728",
-  "One slow breath at a time, love. I am with you through this. \u{1FAF6}",
-];
-
-if (petalRain) {
-  const petalCount = window.innerWidth < 640 ? 12 : 18;
-  const petalFragment = document.createDocumentFragment();
-
-  for (let index = 0; index < petalCount; index += 1) {
-    const petal = document.createElement("span");
-    const size = 16 + Math.random() * 14;
-    const height = size * (1.35 + Math.random() * 0.25);
-    const left = `${Math.random() * 100}%`;
-    const drift = `${-90 + Math.random() * 180}px`;
-    const spin = `${160 + Math.random() * 260}deg`;
-    const duration = `${12 + Math.random() * 11}s`;
-    const delay = `${Math.random() * -18}s`;
-    const opacity = 0.32 + Math.random() * 0.38;
-
-    petal.className = "falling-petal";
-    petal.style.setProperty("--left", left);
-    petal.style.setProperty("--width", `${size}px`);
-    petal.style.setProperty("--height", `${height}px`);
-    petal.style.setProperty("--drift", drift);
-    petal.style.setProperty("--spin", spin);
-    petal.style.setProperty("--duration", duration);
-    petal.style.setProperty("--delay", delay);
-    petal.style.setProperty("--opacity", opacity.toFixed(2));
-    petalFragment.appendChild(petal);
-  }
-
-  petalRain.appendChild(petalFragment);
-}
+const quizCards = document.querySelectorAll(".quiz-card");
+const scoreButton = document.querySelector("#score-button");
+const scoreOutput = document.querySelector("#score-output");
 
 if (revealItems.length) {
   const observer = new IntersectionObserver(
@@ -51,17 +13,78 @@ if (revealItems.length) {
         }
       });
     },
-    { threshold: 0.15 }
+    { threshold: 0.14 }
   );
 
   revealItems.forEach((item) => observer.observe(item));
 }
 
-if (comfortButton && buttonMessage) {
-  let messageIndex = 0;
+quizCards.forEach((card) => {
+  const options = card.querySelectorAll(".quiz-option");
 
-  comfortButton.addEventListener("click", () => {
-    messageIndex = (messageIndex + 1) % comfortMessages.length;
-    buttonMessage.textContent = comfortMessages[messageIndex];
+  options.forEach((option, index) => {
+    option.addEventListener("click", () => {
+      options.forEach((item) => item.classList.remove("is-selected"));
+      option.classList.add("is-selected");
+      card.dataset.selected = String(index);
+    });
+  });
+});
+
+if (scoreButton && scoreOutput) {
+  scoreButton.addEventListener("click", () => {
+    let score = 0;
+    let answered = 0;
+
+    quizCards.forEach((card) => {
+      const correctIndex = Number(card.dataset.correct);
+      const selectedIndex = Number(card.dataset.selected);
+      const explanation = card.dataset.explanation;
+      const options = card.querySelectorAll(".quiz-option");
+      const feedback = card.querySelector(".quiz-feedback");
+
+      options.forEach((option, index) => {
+        option.classList.remove("is-correct", "is-wrong");
+
+        if (index === correctIndex) {
+          option.classList.add("is-correct");
+        }
+
+        if (!Number.isNaN(selectedIndex) && index === selectedIndex && selectedIndex !== correctIndex) {
+          option.classList.add("is-wrong");
+        }
+      });
+
+      if (!Number.isNaN(selectedIndex)) {
+        answered += 1;
+      }
+
+      if (!Number.isNaN(selectedIndex) && selectedIndex === correctIndex) {
+        score += 1;
+      }
+
+      if (feedback) {
+        if (Number.isNaN(selectedIndex)) {
+          feedback.textContent = "Choose one option first.";
+        } else if (selectedIndex === correctIndex) {
+          feedback.textContent = `Correct. ${explanation}`;
+        } else {
+          feedback.textContent = `Incorrect. ${explanation}`;
+        }
+      }
+    });
+
+    if (answered < quizCards.length) {
+      scoreOutput.textContent = `You answered ${answered}/${quizCards.length}. Finish all questions and then check again.`;
+      return;
+    }
+
+    if (score >= 10) {
+      scoreOutput.textContent = `Score: ${score}/${quizCards.length}. Excellent. Your Structure of Atom prep looks strong.`;
+    } else if (score >= 7) {
+      scoreOutput.textContent = `Score: ${score}/${quizCards.length}. Good. Revise Bohr numericals, quantum numbers, and configurations once more.`;
+    } else {
+      scoreOutput.textContent = `Score: ${score}/${quizCards.length}. Read the formula sheet and work through the numericals again.`;
+    }
   });
 }
